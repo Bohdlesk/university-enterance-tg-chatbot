@@ -3,6 +3,8 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import { connectToDB } from './bd';
 
+import { client } from './redisClient';
+
 import { APIV1Router } from './routes';
 
 const app = express();
@@ -21,5 +23,9 @@ app.use('/api/v1', APIV1Router);
 
 // connect to database
 connectToDB();
+
+client.on('connect', () => {
+  console.log('Connected to redis');
+});
 
 export { app };
