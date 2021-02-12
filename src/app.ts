@@ -2,6 +2,8 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 
+import { client } from './redisClient';
+
 import { connectToDB } from './bd';
 import { APIV1Router } from './routes';
 import { validatorsMiddlewares, loggerMiddlewares } from './middlewares';
@@ -26,5 +28,9 @@ app.use(loggerMiddlewares.errorLogger);
 
 // connect to database
 connectToDB();
+
+client.on('connect', () => {
+  console.log('Connected to redis');
+});
 
 export { app };
