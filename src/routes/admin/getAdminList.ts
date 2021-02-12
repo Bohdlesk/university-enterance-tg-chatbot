@@ -8,7 +8,9 @@ adminsListRouter.get('/', async (req, res) => {
   try {
     const users = await User.findAll({
       where: {
-        type_id: 2,
+        type_id: {
+          [Op.or]: [2, 3],
+        },
       },
     });
     res.status(200).json({
