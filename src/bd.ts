@@ -11,6 +11,9 @@ const db = new Sequelize(
         rejectUnauthorized: false,
       },
     },
+    logging: process.env.NODE_ENV === 'production'
+      ? false
+      : console.log,
   },
 );
 
