@@ -12,9 +12,10 @@ getAllUsersRouter.get('/', async (req, res) => {
     const getAsync = promisify(client.get).bind(client);
 
     const usersRedis = await getAsync('users');
-    console.log(usersRedis);
-
+    
     if (usersRedis) {
+      console.log(JSON.parse(usersRedis));
+      
       return res.status(200).json({
         status: 'success',
         msg: 'cache',
@@ -25,7 +26,7 @@ getAllUsersRouter.get('/', async (req, res) => {
     const usersList = await User.findAll({ where: queryParams });
 
     client.set('users', JSON.stringify(usersList));
-    client.expire('users', 10);
+    client.expire('users', 20);
 
     if (usersList.length === 0) {
       throw new Error('Not found');

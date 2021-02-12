@@ -11,19 +11,25 @@ createUserRouter.post('/', async (req, res) => {
       throw new Error('Telegram id (tg_id) parameter is not found');
     }
     const user = await User.create(req.body);
+    const queryParams = { ...req.query };
 
-    // const getAsync = promisify(client.get).bind(client);
-    // const usersRedis = await getAsync('users');
+    const getAsync = promisify(client.get).bind(client);
+    const usersRedis = await getAsync('users');
 
-    // const userContainer = user.toString();
-    // if (usersRedis) {
-    //   const updatedCache = usersRedis.concat(userContainer);
-    //   client.set('users', JSON.stringify(updatedCache));
-    //   client.expire('users', 10);
-    // }
+    if (usersRedis) {
+      const userContainer = JSON.parse(usersRedis);
+      userContainer.push(user);
+      
+      console.log(userContainer);
 
-    // client.set('users', JSON.stringify(usersRedis));
-    // client.expire('users', 10);
+      client.set('users', JSON.stringify(userContainer));
+      client.expire('users', 20);
+    } else {
+      const usersList = await User.findAll({ where: queryParams });
+
+      client.set('users', JSON.stringify(usersList));
+      client.expire('users', 20);
+    }
 
     res.status(200).json({
       status: 'success',

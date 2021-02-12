@@ -25,7 +25,7 @@ getUsersAmountRouter.get('/', async (req, res) => {
     const amount = await User.count({ where: queryParams });
 
     client.set('usersAmount', `${amount}`);
-    client.expire('usersAmount', 10);
+    client.expire('usersAmount', 20);
 
     res.status(200).json({
       status: 'success',

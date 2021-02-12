@@ -1,5 +1,7 @@
 import express from 'express';
+import { promisify } from 'util';
 import { User } from '../../models';
+import { client } from '../../redisClient';
 
 const deleteUserRouter = express.Router();
 
@@ -13,6 +15,21 @@ deleteUserRouter.delete('/', async (req, res) => {
         tg_id: req.query.tg_id,
       },
     });
+
+    const getAsync = promisify(client.get).bind(client);
+    const usersRedis = await getAsync('users');
+
+    if (usersRedis) {
+      const updatedUsersRedis = JSON.parse(usersRedis);
+      const removeUser = updatedUsersRedis.filter((el: any) => {
+        return el.tg_id !== req.query.tg_id;
+      });
+
+      console.log(JSON.stringify(removeUser));
+      client.set('users', JSON.stringify(removeUser));
+      client.expire('users', 20);
+    }
+
     if (!isDeleted) {
       throw new Error('User Does not exist');
     }
