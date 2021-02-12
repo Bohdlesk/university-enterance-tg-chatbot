@@ -5,12 +5,6 @@ const addQuestionAnswer = express.Router();
 
 addQuestionAnswer.post('/', async (req, res) => {
   try {
-    if (req.body.answer === undefined) {
-      throw new Error('the answer was not found in the given file');
-    }
-    if (req.body.id === undefined) {
-      throw new Error('the question id was not found in the given file');
-    }
     const unansweredQuestion = await UnansweredQuestion.findOne({
       where: {
         id: req.body.id,

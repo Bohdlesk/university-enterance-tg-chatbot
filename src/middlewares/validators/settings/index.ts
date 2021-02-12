@@ -5,7 +5,7 @@ import getSettingsValueMiddleware from './getSettingsValue';
 
 const settingsValidatorsMiddleware = Router();
 
-settingsValidatorsMiddleware.use('/', changeSettingsMiddleware);
-settingsValidatorsMiddleware.use('/', getSettingsValueMiddleware);
+settingsValidatorsMiddleware.use('/change', changeSettingsMiddleware);
+settingsValidatorsMiddleware.use('/get', getSettingsValueMiddleware);
 
 export default settingsValidatorsMiddleware;

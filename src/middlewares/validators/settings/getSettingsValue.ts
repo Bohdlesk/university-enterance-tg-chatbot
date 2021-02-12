@@ -10,6 +10,6 @@ const querySchema = Joi.object({
   name: Joi.string().required(),
 });
 
-router.get('/get', validator.query(querySchema));
+router.get('/', validator.query(querySchema));
 
 export default router;
