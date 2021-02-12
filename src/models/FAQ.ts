@@ -21,4 +21,7 @@ export default db.define('faqs', {
     type: DataTypes.INTEGER,
     defaultValue: 1,
   },
+},
+{
+  timestamps: false,
 });
