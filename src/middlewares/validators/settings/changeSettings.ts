@@ -8,7 +8,7 @@ const validator = createValidator();
 
 const bodySchema = Joi.object({
   value: Joi.string().required(),
-    name: Joi.string().required(),
+  name: Joi.string().required(),
 });
 
 router.put('/', validator.body(bodySchema));
