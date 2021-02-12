@@ -8,12 +8,9 @@ const validator = createValidator();
 
 const bodySchema = Joi.object({
   value: Joi.string().required(),
+    name: Joi.string().required(),
 });
 
-const querySchema = Joi.object({
-  name: Joi.string().required(),
-});
-
-router.put('/', validator.query(querySchema), validator.body(bodySchema));
+router.put('/', validator.body(bodySchema));
 
 export default router;
