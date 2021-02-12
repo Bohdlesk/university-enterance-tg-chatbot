@@ -5,9 +5,6 @@ const deleteUserRouter = express.Router();
 
 deleteUserRouter.delete('/', async (req, res) => {
   try {
-    if (req.query.tg_id === undefined) {
-      throw new Error('Telegram id (tg_id) parameter is not found');
-    }
     const isDeleted = await User.destroy({
       where: {
         tg_id: req.query.tg_id,
