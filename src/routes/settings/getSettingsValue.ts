@@ -15,7 +15,7 @@ getSettingsValueRouter.get('/', async (req, res) => {
     }
     const settingsValue = await BotSetting.findAll(params);
     if (settingsValue.length === 0) {
-      throw new Error('Not found');
+      throw new Error(`Not found, check value setting name: ${req.query.name}`);
     }
     res.status(200).json({
       status: 'success',

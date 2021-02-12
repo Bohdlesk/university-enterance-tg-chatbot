@@ -28,6 +28,14 @@ module.exports = {
         type_name: 'Other',
       },
     ]);
+    await await queryInterface.bulkInsert('users', [{
+      tg_id: 1111,
+      tg_name: 'Pupkin',
+      type_id: 5,
+      role_id: 3,
+      city: 'Lviv',
+      state: JSON.stringify({ last: 'AdminsPanel' }),
+    }]);
     await queryInterface.bulkInsert('bot_settings', [
       {
         name: 'AboutNULP',

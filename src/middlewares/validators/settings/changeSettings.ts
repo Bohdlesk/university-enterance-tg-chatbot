@@ -6,12 +6,11 @@ const router = express.Router();
 
 const validator = createValidator();
 
-const querySchema = Joi.object({
-  type_id: Joi.number(),
-  role_id: Joi.number(),
-  city: Joi.string(),
+const bodySchema = Joi.object({
+  value: Joi.string().required(),
+  name: Joi.string().required(),
 });
 
-router.get('/', validator.query(querySchema));
+router.put('/', validator.body(bodySchema));
 
 export default router;

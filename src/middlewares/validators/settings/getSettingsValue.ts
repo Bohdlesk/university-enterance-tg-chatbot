@@ -7,9 +7,7 @@ const router = express.Router();
 const validator = createValidator();
 
 const querySchema = Joi.object({
-  type_id: Joi.number(),
-  role_id: Joi.number(),
-  city: Joi.string(),
+  name: Joi.string().required(),
 });
 
 router.get('/', validator.query(querySchema));
