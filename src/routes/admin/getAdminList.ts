@@ -9,7 +9,7 @@ adminsListRouter.get('/', async (req, res) => {
     const users = await User.findAll({
       where: {
         type_id: {
-          [Op.or]: [2, 3],
+          [Op.or]: [UserTypes.admin, UserTypes.superAdmin],
         },
       },
     });

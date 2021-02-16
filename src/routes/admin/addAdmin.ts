@@ -1,12 +1,13 @@
 import express from 'express';
 import { User } from '../../models';
+import { UserTypes } from '../../models/UserType';
 
 const addAdminRouter = express.Router();
 
 addAdminRouter.put('/', async (req, res) => {
   try {
     const telegramId = req.query.tg_id;
-    const adminAdded = await User.update({ type_id: 2 }, {
+    const adminAdded = await User.update({ type_id: UserTypes.admin }, {
       where: {
         tg_id: telegramId,
       },
