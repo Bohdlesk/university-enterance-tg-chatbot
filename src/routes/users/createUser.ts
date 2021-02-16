@@ -16,7 +16,7 @@ createUserRouter.post('/', async (req, res) => {
     if (usersRedis) {
       const userContainer = JSON.parse(usersRedis);
       userContainer.push(user);
-      
+
       console.log(userContainer);
 
       client.set('users', JSON.stringify(userContainer));

@@ -24,11 +24,10 @@ updateUserDataRouter.put('/', async (req, res) => {
 
     if (usersRedis) {
       const usersContainer = JSON.parse(usersRedis);
-      
+
       const us = updatedUser[1][0].get();
 
       const newList = usersContainer.map((el: any) => {
-
         if (el.tg_id === us.tg_id) {
           return us;
         }

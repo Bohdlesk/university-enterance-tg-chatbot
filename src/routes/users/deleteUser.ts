@@ -18,9 +18,7 @@ deleteUserRouter.delete('/', async (req, res) => {
 
     if (usersRedis) {
       const updatedUsersRedis = JSON.parse(usersRedis);
-      const removeUser = updatedUsersRedis.filter((el: any) => {
-        return el.tg_id !== req.query.tg_id;
-      });
+      const removeUser = updatedUsersRedis.filter((el: any) => el.tg_id !== req.query.tg_id);
 
       console.log(JSON.stringify(removeUser));
       client.set('users', JSON.stringify(removeUser));
