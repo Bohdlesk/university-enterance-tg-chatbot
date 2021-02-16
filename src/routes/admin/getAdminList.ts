@@ -1,21 +1,25 @@
 import express from 'express';
 import { Op } from 'sequelize';
 import { User } from '../../models';
+import { UserRoles } from '../../models/UserRole';
 
 const adminsListRouter = express.Router();
 
 adminsListRouter.get('/', async (req, res) => {
   try {
-    const users = await User.findAll({
+    const admins = await User.findAll({
       where: {
-        type_id: {
-          [Op.or]: [2, 3],
+        role_id: {
+          [Op.or]: [UserRoles.admin, UserRoles.superAdmin],
         },
       },
     });
+    if (admins.length === 0) {
+      throw new Error('Admin users not found');
+    }
     res.status(200).json({
       status: 'success',
-      users,
+      users: admins,
     });
   } catch (error) {
     res.status(500).json({

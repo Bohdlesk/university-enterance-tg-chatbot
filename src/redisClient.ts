@@ -1,8 +1,4 @@
 import redis from 'redis';
-import * as dotenv from 'dotenv';
+import { redisUrl } from './const';
 
-dotenv.config();
-
-const { REDIS_URI } = process.env;
-
-export const client = redis.createClient(`${REDIS_URI}`);
+export const client = redis.createClient(`${redisUrl}`);

@@ -4,10 +4,12 @@ dotenv.config();
 
 declare let process: {
     env: {
-        DATABASE_URL: string
+        DATABASE_URL: string,
+        REDIS_URL: string
     }
 };
 
 const conString = process.env.DATABASE_URL;
+const redisUrl = process.env.REDIS_URL;
 
-export { conString };
+export { conString, redisUrl };
