@@ -1,7 +1,7 @@
 import express from 'express';
 import { Op } from 'sequelize';
 import { User } from '../../models';
-import { UserTypes } from '../../models/UserType';
+import { UserRoles } from '../../models/UserRole';
 
 const adminsListRouter = express.Router();
 
@@ -9,8 +9,8 @@ adminsListRouter.get('/', async (req, res) => {
   try {
     const admins = await User.findAll({
       where: {
-        type_id: {
-          [Op.or]: [UserTypes.admin, UserTypes.superAdmin],
+        role_id: {
+          [Op.or]: [UserRoles.admin, UserRoles.superAdmin],
         },
       },
     });

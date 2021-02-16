@@ -1,13 +1,13 @@
 import express from 'express';
 import { User } from '../../models';
-import { UserTypes } from '../../models/UserType';
+import { UserRoles } from '../../models/UserRole';
 
 const deleteAdminRouter = express.Router();
 
 deleteAdminRouter.put('/', async (req, res) => {
   try {
     const telegramId = req.query.tg_id;
-    const adminDeleted = await User.update({ type_id: UserTypes.regularUser }, {
+    const adminDeleted = await User.update({ role_id: UserRoles.regularUser }, {
       where: {
         tg_id: telegramId,
       },
