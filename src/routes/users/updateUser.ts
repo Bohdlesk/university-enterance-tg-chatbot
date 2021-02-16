@@ -36,8 +36,7 @@ updateUserDataRouter.put('/', async (req, res) => {
       });
 
       console.log(JSON.stringify(newList));
-      client.set('users', JSON.stringify(newList));
-      client.expire('users', 20);
+      client.set('users', JSON.stringify(newList), 'EX', 60);
     }
 
     res.status(200).json({

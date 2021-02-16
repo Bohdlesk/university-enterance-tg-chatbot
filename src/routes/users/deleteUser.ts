@@ -14,6 +14,7 @@ deleteUserRouter.delete('/', async (req, res) => {
     });
 
     const getAsync = promisify(client.get).bind(client);
+    const amount = await User.count();
     const usersRedis = await getAsync('users');
 
     if (usersRedis) {
@@ -23,8 +24,8 @@ deleteUserRouter.delete('/', async (req, res) => {
       });
 
       console.log(JSON.stringify(removeUser));
-      client.set('users', JSON.stringify(removeUser));
-      client.expire('users', 20);
+      client.set('users', JSON.stringify(removeUser), 'EX', 60);
+      client.set('usersAmount', `${amount}`, 'EX', 60);
     }
 
     if (!isDeleted) {

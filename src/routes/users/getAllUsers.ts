@@ -25,8 +25,7 @@ getAllUsersRouter.get('/', async (req, res) => {
 
     const usersList = await User.findAll({ where: queryParams });
 
-    client.set('users', JSON.stringify(usersList));
-    client.expire('users', 20);
+    client.set('users', JSON.stringify(usersList), 'EX', 60);
 
     if (usersList.length === 0) {
       throw new Error('Not found');
