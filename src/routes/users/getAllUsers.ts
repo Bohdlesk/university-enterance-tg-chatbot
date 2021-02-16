@@ -24,9 +24,8 @@ getAllUsersRouter.get('/', async (req, res) => {
       }
 
       const allUsersList = await User.findAll();
-
-      client.set('users', JSON.stringify(allUsersList));
-      client.expire('users', 20);
+      
+      client.set('users', JSON.stringify(allUsersList), 'EX', 60);
 
       if (allUsersList.length === 0) {
         throw new Error('Not found');
@@ -38,16 +37,8 @@ getAllUsersRouter.get('/', async (req, res) => {
       });
     }
 
-<<<<<<< HEAD
-    const usersList = await User.findAll({ where: queryParams });
-
-    client.set('users', JSON.stringify(usersList), 'EX', 60);
-
-    if (usersList.length === 0) {
-=======
     const filteredUsersList = await User.findAll({ where: queryParams });
     if (filteredUsersList.length === 0) {
->>>>>>> 41f7fc07bc2555f1d6189e18b53e6ddedebe981b
       throw new Error('Not found');
     }
 
