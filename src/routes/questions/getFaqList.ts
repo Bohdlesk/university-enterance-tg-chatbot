@@ -6,8 +6,8 @@ const getFaqListRouter = express.Router();
 getFaqListRouter.get('/', async (req, res) => {
   try {
     let where = {};
-    if (req.query.id) {
-      where = { id: req.query.id };
+    if (req.query.name) {
+      where = { name: req.query.name };
     }
     const params: object = {
       limit: req.query.questions_amount,

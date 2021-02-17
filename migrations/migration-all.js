@@ -51,10 +51,9 @@ module.exports = {
       timestamps: false,
     });
     await queryInterface.createTable('faqs', {
-      id: {
-        type: Sequelize.INTEGER,
+      name: {
+        type: Sequelize.STRING(100),
         primaryKey: true,
-        autoIncrement: true,
         allowNull: false,
       },
       question: {
