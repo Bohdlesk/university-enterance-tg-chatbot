@@ -1,26 +1,20 @@
 import express from 'express';
 import dialogflow from '@google-cloud/dialogflow';
-import dotenv from 'dotenv';
-import fs from 'fs';
 
+import { dialogflowProjectId } from '../../const';
 import { FAQ } from '../../models';
 
-dotenv.config();
-// const projectId = 'ismbot-irio';
-const projectId = 'chatbot-app-agent-kxlc';
 const intentsClient = new dialogflow.IntentsClient();
 
 const listIntents = async () => {
-  const projectAgentPath = intentsClient.agentPath(projectId);
+  const projectAgentPath = intentsClient.agentPath(dialogflowProjectId);
 
   const request = {
     parent: projectAgentPath,
     intentView: 1,
   };
 
-  // Send the request for listing intents.
   const [response] = await intentsClient.listIntents(request);
-  fs.writeFileSync('../response.json', JSON.stringify(response));
   return response;
 };
 
