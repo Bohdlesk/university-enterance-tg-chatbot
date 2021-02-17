@@ -6,6 +6,7 @@ import { dialogflowProjectId } from '../../const';
 import { FAQ } from '../../models';
 import IIntent = google.cloud.dialogflow.v2beta1.IIntent;
 import IPart = google.cloud.dialogflow.v2beta1.Intent.TrainingPhrase.IPart;
+import IntentView = google.cloud.dialogflow.v2.IntentView;
 
 const intentsClient = new dialogflow.IntentsClient();
 
@@ -14,7 +15,7 @@ const listIntents = async () => {
 
   const request = {
     parent: projectAgentPath,
-    intentView: 1,
+    intentView: IntentView.INTENT_VIEW_FULL
   };
 
   const [response] = await intentsClient.listIntents(request);
