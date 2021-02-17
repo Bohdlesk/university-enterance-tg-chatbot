@@ -7,9 +7,9 @@ const router = express.Router();
 const validator = createValidator();
 
 const querySchema = Joi.object({
-  id: Joi.string(),
+  name: Joi.string(),
   questions_amount: Joi.number(),
-}).xor('id', 'questions_amount');
+}).xor('name', 'questions_amount');
 
 router.get('/', validator.query(querySchema));
 
