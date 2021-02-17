@@ -5,8 +5,15 @@ const getUnansweredQuestionsListRouter = express.Router();
 
 getUnansweredQuestionsListRouter.get('/', async (req, res) => {
   try {
-    const queryParams = { ...req.query };
-    const questions: object = await UnansweredQuestion.findAll({ where: queryParams });
+    let where = {};
+    if (req.query.id) {
+      where = { id: req.query.id };
+    }
+    const params: object = {
+      limit: req.query.questions_amount,
+      where,
+    };
+    const questions: object = await UnansweredQuestion.findAll(params);
     res.status(200).json({
       status: 'success',
       questions,
