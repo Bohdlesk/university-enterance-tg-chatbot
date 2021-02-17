@@ -1,11 +1,9 @@
-import express from 'express';
+import { Request, Response } from 'express';
 import { promisify } from 'util';
 import { User } from '../../models';
 import { client } from '../../redisClient';
 
-const deleteUserRouter = express.Router();
-
-deleteUserRouter.delete('/', async (req, res) => {
+export default async (req: Request, res: Response): Promise<Response> => {
   try {
     const isDeleted = await User.destroy({
       where: {
@@ -28,16 +26,14 @@ deleteUserRouter.delete('/', async (req, res) => {
     if (!isDeleted) {
       throw new Error('User Does not exist');
     }
-    res.status(200).json({
+    return res.status(200).json({
       status: 'success',
       info: `User ${req.query.tg_id} has been deleted`,
     });
   } catch (error) {
-    res.status(500).json({
+    return res.status(500).json({
       message: error.message,
       error,
     });
   }
-});
-
-export { deleteUserRouter };
+};

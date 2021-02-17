@@ -1,4 +1,4 @@
-import express from 'express';
+import { Request, Response } from 'express';
 import dialogflow from '@google-cloud/dialogflow';
 
 import { dialogflowProjectId } from '../../const';
@@ -18,9 +18,7 @@ const listIntents = async () => {
   return response;
 };
 
-const syncFaqsRouter = express.Router();
-
-syncFaqsRouter.get('/', async (req, res) => {
+export default async (req: Request, res: Response): Promise<Response> => {
   try {
     const intents = await listIntents();
 
@@ -36,15 +34,13 @@ syncFaqsRouter.get('/', async (req, res) => {
       updateOnDuplicate: ['question', 'answer'],
     });
 
-    res.status(200).json({
+    return res.status(200).json({
       status: 'success',
     });
   } catch (error) {
-    res.status(500).json({
+    return res.status(500).json({
       message: error.message,
       error,
     });
   }
-});
-
-export { syncFaqsRouter };
+};

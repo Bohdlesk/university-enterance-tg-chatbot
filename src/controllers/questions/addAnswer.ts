@@ -1,9 +1,7 @@
-import express from 'express';
+import { Request, Response } from 'express';
 import { FAQ, UnansweredQuestion } from '../../models';
 
-const addQuestionAnswer = express.Router();
-
-addQuestionAnswer.post('/', async (req, res) => {
+export default async (req: Request, res: Response): Promise<Response> => {
   try {
     const unansweredQuestion = await UnansweredQuestion.findOne({
       where: {
@@ -23,16 +21,14 @@ addQuestionAnswer.post('/', async (req, res) => {
       question: unansweredQuestion.get('question'),
       answer: req.body.answer,
     });
-    res.status(200).json({
+    return res.status(200).json({
       status: 'success',
       question: answeredQuestion,
     });
   } catch (error) {
-    res.status(500).json({
+    return res.status(500).json({
       message: error.message,
       error,
     });
   }
-});
-
-export { addQuestionAnswer };
+};

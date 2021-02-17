@@ -1,11 +1,9 @@
-import express from 'express';
+import { Request, Response } from 'express';
 import { promisify } from 'util';
 import { User } from '../../models';
 import { client } from '../../redisClient';
 
-const createUserRouter = express.Router();
-
-createUserRouter.post('/', async (req, res) => {
+export default async (req: Request, res: Response): Promise<Response> => {
   try {
     const user = await User.create(req.body);
     const queryParams = { ...req.query };
@@ -17,8 +15,6 @@ createUserRouter.post('/', async (req, res) => {
       const userContainer = JSON.parse(usersRedis);
       userContainer.push(user);
 
-      console.log(userContainer);
-
       client.set('users', JSON.stringify(userContainer));
       client.expire('users', 20);
     } else {
@@ -28,16 +24,14 @@ createUserRouter.post('/', async (req, res) => {
       client.expire('users', 20);
     }
 
-    res.status(200).json({
+    return res.status(200).json({
       status: 'success',
       user,
     });
   } catch (error) {
-    res.status(500).json({
+    return res.status(500).json({
       message: error.message,
       error,
     });
   }
-});
-
-export { createUserRouter };
+};

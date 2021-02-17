@@ -1,12 +1,10 @@
-import express from 'express';
+import { Request, Response } from 'express';
 import { promisify } from 'util';
 
 import { client } from '../../redisClient';
 import { User } from '../../models';
 
-const getAllUsersRouter = express.Router();
-
-getAllUsersRouter.get('/', async (req, res) => {
+export default async (req: Request, res: Response): Promise<Response> => {
   try {
     const queryParams = { ...req.query };
     console.log('Keys length', Object.keys(req.query).length);
@@ -53,6 +51,4 @@ getAllUsersRouter.get('/', async (req, res) => {
       error,
     });
   }
-});
-
-export { getAllUsersRouter };
+};

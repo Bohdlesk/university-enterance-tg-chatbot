@@ -1,9 +1,7 @@
-import express from 'express';
+import { Request, Response } from 'express';
 import { FAQ } from '../../models';
 
-const getFaqListRouter = express.Router();
-
-getFaqListRouter.get('/', async (req, res) => {
+export default async (req: Request, res: Response): Promise<Response> => {
   try {
     let where = {};
     if (req.query.name) {
@@ -15,16 +13,14 @@ getFaqListRouter.get('/', async (req, res) => {
       where,
     };
     const questions: object = await FAQ.findAll(params);
-    res.status(200).json({
+    return res.status(200).json({
       status: 'success',
       questions,
     });
   } catch (error) {
-    res.status(500).json({
+    return res.status(500).json({
       message: error.message,
       error,
     });
   }
-});
-
-export { getFaqListRouter };
+};

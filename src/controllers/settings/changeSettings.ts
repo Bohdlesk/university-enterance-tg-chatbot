@@ -1,9 +1,7 @@
-import express from 'express';
+import { Request, Response } from 'express';
 import { BotSetting } from '../../models';
 
-const changeSettingsRouter = express.Router();
-
-changeSettingsRouter.put('/', async (req, res) => {
+export default async (req: Request, res: Response): Promise<Response> => {
   try {
     const updatedFAQ = await BotSetting.update({ value: req.body.value }, {
       where: {
@@ -14,16 +12,14 @@ changeSettingsRouter.put('/', async (req, res) => {
     if (!updatedFAQ[0]) {
       throw new Error(`The value has not been updated, check value setting name: ${req.body.name}`);
     }
-    res.status(200).json({
+    return res.status(200).json({
       status: 'success',
       faq: updatedFAQ[1][0],
     });
   } catch (error) {
-    res.status(500).json({
+    return res.status(500).json({
       message: error.message,
       error,
     });
   }
-});
-
-export { changeSettingsRouter };
+};

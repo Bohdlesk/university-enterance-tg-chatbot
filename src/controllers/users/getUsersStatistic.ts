@@ -1,11 +1,9 @@
-import express from 'express';
+import { Request, Response } from 'express';
 import { promisify } from 'util';
 import { User } from '../../models';
 import { client } from '../../redisClient';
 
-const getUsersAmountRouter = express.Router();
-
-getUsersAmountRouter.get('/', async (req, res) => {
+export default async (req: Request, res: Response): Promise<Response> => {
   try {
     const queryParams = { ...req.query };
 
@@ -27,16 +25,14 @@ getUsersAmountRouter.get('/', async (req, res) => {
     client.set('usersAmount', `${amount}`);
     client.expire('usersAmount', 20);
 
-    res.status(200).json({
+    return res.status(200).json({
       status: 'success',
       usersAmount: amount,
     });
   } catch (error) {
-    res.status(500).json({
+    return res.status(500).json({
       message: error.message,
       error,
     });
   }
-});
-
-export { getUsersAmountRouter };
+};

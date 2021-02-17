@@ -1,11 +1,10 @@
-import express from 'express';
+import { Request, Response } from 'express';
 import { promisify } from 'util';
+
 import { User } from '../../models';
 import { client } from '../../redisClient';
 
-const updateUserDataRouter = express.Router();
-
-updateUserDataRouter.put('/', async (req, res) => {
+export default async (req: Request, res: Response): Promise<Response> => {
   try {
     const telegramId = req.query.tg_id;
     const updatedUser = await User.update(req.body, {
@@ -34,21 +33,18 @@ updateUserDataRouter.put('/', async (req, res) => {
         return el;
       });
 
-      console.log(JSON.stringify(newList));
       client.set('users', JSON.stringify(newList));
       client.expire('users', 20);
     }
 
-    res.status(200).json({
+    return res.status(200).json({
       status: 'success',
       user: updatedUser[1][0].get(),
     });
   } catch (error) {
-    res.status(500).json({
+    return res.status(500).json({
       message: error.message,
       error,
     });
   }
-});
-
-export { updateUserDataRouter };
+};
