@@ -7,12 +7,13 @@ const router = express.Router();
 const validator = createValidator();
 
 const bodySchema = Joi.object({
-  tg_id: Joi.number().required(),
-  tg_name: Joi.string().required(),
+  id: Joi.number().required(),
+  username: Joi.string(),
+  name: Joi.string().required(),
   phone_number: Joi.string().regex(/^\+(?:[0-9] ?){6,14}[0-9]$/),
-  type_id: Joi.number(),
-  role_id: Joi.number(),
-  city: Joi.string(),
+  type_name: Joi.string(),
+  role_name: Joi.string(),
+  city: Joi.string().required(),
   state: Joi.object().required(),
 });
 

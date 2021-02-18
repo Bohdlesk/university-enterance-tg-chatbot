@@ -6,11 +6,9 @@ import { client } from '../../redisClient';
 
 export default async (req: Request, res: Response): Promise<Response> => {
   try {
-    const telegramId = req.query.tg_id;
+    const { id } = req.query;
     const updatedUser = await User.update(req.body, {
-      where: {
-        tg_id: telegramId,
-      },
+      where: { id },
       returning: true,
     });
 
@@ -27,7 +25,7 @@ export default async (req: Request, res: Response): Promise<Response> => {
       const us = updatedUser[1][0].get();
 
       const newList = usersContainer.map((el: any) => {
-        if (el.tg_id === us.tg_id) {
+        if (el.id === us.id) {
           return us;
         }
         return el;

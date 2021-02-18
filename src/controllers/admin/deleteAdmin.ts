@@ -4,11 +4,9 @@ import { UserRoles } from '../../models/UserRole';
 
 export default async (req: Request, res: Response): Promise<Response> => {
   try {
-    const telegramId = req.query.tg_id;
-    const adminDeleted = await User.update({ role_id: UserRoles.regularUser }, {
-      where: {
-        tg_id: telegramId,
-      },
+    const { id } = req.query;
+    const adminDeleted = await User.update({ role_name: UserRoles.RegularUser }, {
+      where: { id },
       returning: true,
     });
     if (!adminDeleted[0]) {

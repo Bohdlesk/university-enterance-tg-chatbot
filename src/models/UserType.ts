@@ -3,16 +3,10 @@ import { DataTypes } from 'sequelize';
 import { db } from '../bd';
 
 export default db.define('user_types', {
-  id: {
-    type: DataTypes.INTEGER,
-    primaryKey: true,
-    autoIncrement: true,
-    allowNull: false,
-  },
-  type_name: {
+  name: {
     type: DataTypes.STRING,
+    primaryKey: true,
     allowNull: false,
-    unique: true,
   },
 },
 {

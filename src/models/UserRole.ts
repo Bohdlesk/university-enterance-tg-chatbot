@@ -3,22 +3,16 @@ import { DataTypes } from 'sequelize';
 import { db } from '../bd';
 
 export enum UserRoles {
-    regularUser = 1,
-    admin = 2,
-    superAdmin = 3
+    RegularUser = 'regular',
+    Admin = 'admin',
+    SuperAdmin = 'super-admin',
 }
 
 export default db.define('user_roles', {
-  id: {
-    type: DataTypes.INTEGER,
-    primaryKey: true,
-    autoIncrement: true,
-    allowNull: false,
-  },
-  role_name: {
+  name: {
     type: DataTypes.STRING,
+    primaryKey: true,
     allowNull: false,
-    unique: true,
   },
 },
 {

@@ -6,7 +6,7 @@ export default db.define(
   'faqs',
   {
     name: {
-      type: DataTypes.STRING(100),
+      type: DataTypes.STRING,
       primaryKey: true,
       allowNull: false,
     },
@@ -20,7 +20,7 @@ export default db.define(
     },
     stats: {
       type: DataTypes.INTEGER,
-      defaultValue: 1,
+      defaultValue: 0,
     },
   },
   {

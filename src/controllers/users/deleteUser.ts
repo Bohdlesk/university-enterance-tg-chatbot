@@ -5,18 +5,15 @@ import { client } from '../../redisClient';
 
 export default async (req: Request, res: Response): Promise<Response> => {
   try {
-    const isDeleted = await User.destroy({
-      where: {
-        tg_id: req.query.tg_id,
-      },
-    });
+    const { id } = req.query;
+    const isDeleted = await User.destroy({ where: { id } });
 
     const getAsync = promisify(client.get).bind(client);
     const usersRedis = await getAsync('users');
 
     if (usersRedis) {
       const updatedUsersRedis = JSON.parse(usersRedis);
-      const removeUser = updatedUsersRedis.filter((el: any) => el.tg_id !== req.query.tg_id);
+      const removeUser = updatedUsersRedis.filter((el: any) => el.id !== req.query.id);
 
       console.log(JSON.stringify(removeUser));
       client.set('users', JSON.stringify(removeUser));
@@ -28,7 +25,7 @@ export default async (req: Request, res: Response): Promise<Response> => {
     }
     return res.status(200).json({
       status: 'success',
-      info: `User ${req.query.tg_id} has been deleted`,
+      info: `User ${req.query.id} has been deleted`,
     });
   } catch (error) {
     return res.status(500).json({

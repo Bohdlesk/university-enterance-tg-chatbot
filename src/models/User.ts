@@ -5,12 +5,12 @@ import UserType from './UserType';
 import UserRole from './UserRole';
 
 export interface IUser {
-  id?: number;
-  tgId: number;
-  tgUsername: string;
+  id: number;
+  username?: string;
+  name: string;
   phoneNumber?: string | null;
   userType?: number;
-  city?: string;
+  city: string;
   roleId?: number;
   state: string;
 }
@@ -19,15 +19,13 @@ export default db.define('users', {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
-    autoIncrement: true,
     allowNull: false,
   },
-  tg_id: {
-    type: DataTypes.INTEGER,
+  username: {
+    type: DataTypes.STRING,
     unique: true,
-    allowNull: false,
   },
-  tg_name: {
+  name: {
     type: DataTypes.STRING,
     allowNull: false,
   },
@@ -35,26 +33,27 @@ export default db.define('users', {
     type: DataTypes.STRING,
     unique: true,
   },
-  type_id: {
-    type: DataTypes.INTEGER,
+  type_name: {
+    type: DataTypes.STRING,
     allowNull: false,
-    defaultValue: 1,
+    defaultValue: 'Applicant',
     references: {
       model: UserType,
-      key: 'id',
+      key: 'name',
     },
   },
-  role_id: {
-    type: DataTypes.INTEGER,
+  role_name: {
+    type: DataTypes.STRING,
     allowNull: false,
-    defaultValue: 1,
+    defaultValue: 'regular',
     references: {
       model: UserRole,
-      key: 'id',
+      key: 'name',
     },
   },
   city: {
     type: DataTypes.STRING,
+    allowNull: false,
   },
   state: {
     type: DataTypes.JSON,
