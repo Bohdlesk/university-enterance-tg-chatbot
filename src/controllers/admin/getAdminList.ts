@@ -8,7 +8,7 @@ export default async (req: Request, res: Response): Promise<Response> => {
     const admins = await User.findAll({
       where: {
         role_id: {
-          [Op.or]: [UserRoles.admin, UserRoles.superAdmin],
+          [Op.or]: [UserRoles.admin],
         },
       },
     });
