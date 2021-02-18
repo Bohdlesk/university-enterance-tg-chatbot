@@ -5,7 +5,6 @@ export {
 } from './admin';
 
 export {
-  addQuestionAnswerController,
   createQuestionController,
   getUnansweredQuestionsListController,
   getFaqListController,
