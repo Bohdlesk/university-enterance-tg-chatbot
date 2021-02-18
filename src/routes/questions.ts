@@ -1,7 +1,6 @@
 import { Router } from 'express';
 
 import {
-  addQuestionAnswerController,
   createQuestionController,
   getUnansweredQuestionsListController,
   getFaqListController,
@@ -11,7 +10,6 @@ import {
 
 const questionsRouter = Router();
 
-questionsRouter.post('/answer', addQuestionAnswerController);
 questionsRouter.post('/', createQuestionController);
 questionsRouter.get('/unanswered', getUnansweredQuestionsListController);
 questionsRouter.get('/faq', getFaqListController);
