@@ -4,7 +4,7 @@ import { addAdminController, getAdminListController, deleteAdminController } fro
 const adminsRouter = Router();
 
 adminsRouter.put('/add', addAdminController);
-adminsRouter.put('/list', getAdminListController);
-adminsRouter.delete('/delete', deleteAdminController);
+adminsRouter.get('/list', getAdminListController);
+adminsRouter.put('/delete', deleteAdminController);
 
 export { adminsRouter };

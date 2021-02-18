@@ -2,48 +2,53 @@ module.exports = {
   up: async (queryInterface) => {
     await queryInterface.bulkInsert('user_roles', [
       {
-        role_name: 'User',
+        name: 'regular',
       },
       {
-        role_name: 'Admin',
+        name: 'admin',
       },
       {
-        role_name: 'Superadmin',
+        name: 'super-admin',
       },
     ]);
     await queryInterface.bulkInsert('user_types', [
       {
-        type_name: 'Enrollee',
+        name: 'Applicant',
       },
       {
-        type_name: 'Student',
+        name: 'Student',
       },
       {
-        type_name: 'Parent',
+        name: 'Parent',
       },
       {
-        type_name: 'Teacher',
+        name: 'Teacher',
       },
       {
-        type_name: 'Other',
+        name: 'Other',
       },
     ]);
     await await queryInterface.bulkInsert('users', [{
-      tg_id: 1111,
-      tg_name: 'Pupkin',
-      type_id: 5,
-      role_id: 3,
+      id: 1111,
+      username: 'vpupkin',
+      name: 'Vasiliy Pupkin',
+      type_name: 'Teacher',
+      role_name: 'super-admin',
       city: 'Lviv',
       state: JSON.stringify({ last: 'AdminsPanel' }),
     }]);
     await queryInterface.bulkInsert('bot_settings', [
       {
         name: 'AboutNULP',
-        value: 'Національний університет «Львівська політехніка» — найстаріший вищий технічний навчальний заклад України та Східної Європи, заснований 1816 року як Цісарсько-королівська реальна школа. Університет складається з 16 інститутів, 114 кафедр, відокремлених навчальних закладів, громадських організацій та загальних підрозділів.',
+        value: '',
       },
       {
         name: 'AboutISM',
-        value: 'Кафедра інформаційних систем та мереж (ІСМ) створена 1 червня 1995 року. Передумовою створення кафедри стало організаційно-структурне оформлення нової молодої наукової школи з проблематики систем баз і банків даних та знань.',
+        value: '',
+      },
+      {
+        name: 'HowToUseBot',
+        value: '',
       },
     ]);
   },

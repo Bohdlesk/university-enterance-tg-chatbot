@@ -6,7 +6,7 @@ const router = express.Router();
 const validator = createValidator();
 
 const querySchema = Joi.object({
-  tg_id: Joi.number().required(),
+  id: Joi.number().required(),
 });
 
 router.delete('/', validator.query(querySchema));

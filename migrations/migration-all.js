@@ -1,47 +1,29 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('user_types', {
-      id: {
-        type: Sequelize.INTEGER,
-        primaryKey: true,
-        autoIncrement: true,
-        allowNull: false,
-      },
-      type_name: {
+      name: {
         type: Sequelize.STRING,
+        primaryKey: true,
         allowNull: false,
-        unique: true,
       },
     },
     {
       timestamps: false,
     });
     await queryInterface.createTable('user_roles', {
-      id: {
-        type: Sequelize.INTEGER,
-        primaryKey: true,
-        autoIncrement: true,
-        allowNull: false,
-      },
-      role_name: {
+      name: {
         type: Sequelize.STRING,
+        primaryKey: true,
         allowNull: false,
-        unique: true,
       },
     },
     {
       timestamps: false,
     });
     await queryInterface.createTable('bot_settings', {
-      id: {
-        type: Sequelize.INTEGER,
-        primaryKey: true,
-        autoIncrement: true,
-        allowNull: false,
-      },
       name: {
         type: Sequelize.STRING,
-        unique: true,
+        primaryKey: true,
       },
       value: {
         type: Sequelize.STRING(2000),
@@ -52,7 +34,7 @@ module.exports = {
     });
     await queryInterface.createTable('faqs', {
       name: {
-        type: Sequelize.STRING(100),
+        type: Sequelize.STRING,
         primaryKey: true,
         allowNull: false,
       },
@@ -66,7 +48,7 @@ module.exports = {
       },
       stats: {
         type: Sequelize.INTEGER,
-        defaultValue: 1,
+        defaultValue: 0,
       },
     });
     await queryInterface.createTable('unanswered_questions', {
@@ -87,15 +69,13 @@ module.exports = {
       id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
-        autoIncrement: true,
         allowNull: false,
       },
-      tg_id: {
-        type: Sequelize.INTEGER,
+      username: {
+        type: Sequelize.STRING,
         unique: true,
-        allowNull: false,
       },
-      tg_name: {
+      name: {
         type: Sequelize.STRING,
         allowNull: false,
       },
@@ -103,26 +83,27 @@ module.exports = {
         type: Sequelize.STRING,
         unique: true,
       },
-      type_id: {
-        type: Sequelize.INTEGER,
+      type_name: {
+        type: Sequelize.STRING,
         allowNull: false,
-        defaultValue: 1,
+        defaultValue: 'Applicant',
         references: {
           model: { tableName: 'user_types' },
-          key: 'id',
+          key: 'name',
         },
       },
-      role_id: {
-        type: Sequelize.INTEGER,
+      role_name: {
+        type: Sequelize.STRING,
         allowNull: false,
-        defaultValue: 1,
+        defaultValue: 'regular',
         references: {
           model: { tableName: 'user_roles' },
-          key: 'id',
+          key: 'name',
         },
       },
       city: {
         type: Sequelize.STRING,
+        allowNull: false,
       },
       state: {
         type: Sequelize.JSON,
