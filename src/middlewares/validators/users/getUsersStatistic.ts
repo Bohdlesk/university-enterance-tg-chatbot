@@ -7,8 +7,8 @@ const router = express.Router();
 const validator = createValidator();
 
 const querySchema = Joi.object({
-  type_name: Joi.number(),
-  role_name: Joi.number(),
+  type_name: Joi.string(),
+  role_name: Joi.string(),
   city: Joi.string(),
 });
 
