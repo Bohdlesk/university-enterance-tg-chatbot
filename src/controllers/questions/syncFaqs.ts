@@ -1,8 +1,12 @@
 import { Request, Response } from 'express';
 import dialogflow from '@google-cloud/dialogflow';
 
+import { google } from '@google-cloud/dialogflow/build/protos/protos';
 import { dialogflowProjectId } from '../../const';
 import { FAQ } from '../../models';
+import IIntent = google.cloud.dialogflow.v2beta1.IIntent;
+import IPart = google.cloud.dialogflow.v2beta1.Intent.TrainingPhrase.IPart;
+import IntentView = google.cloud.dialogflow.v2.IntentView;
 
 const intentsClient = new dialogflow.IntentsClient();
 
@@ -11,7 +15,7 @@ const listIntents = async () => {
 
   const request = {
     parent: projectAgentPath,
-    intentView: 1,
+    intentView: IntentView.INTENT_VIEW_FULL
   };
 
   const [response] = await intentsClient.listIntents(request);
@@ -22,13 +26,8 @@ export default async (req: Request, res: Response): Promise<Response> => {
   try {
     const intents = await listIntents();
 
-    const faqs = intents
-      .filter((intent) => intent.action === 'faq')
-      .map((intent: any) => ({
-        name: intent.displayName,
-        question: intent.trainingPhrases[0].parts[0].text,
-        answer: intent.messages[0].text?.text[0],
-      }));
+    const faqs = intents.filter(isFaq)
+      .map(filterQuestions);
 
     await FAQ.bulkCreate(faqs, {
       updateOnDuplicate: ['question', 'answer'],
@@ -36,6 +35,7 @@ export default async (req: Request, res: Response): Promise<Response> => {
 
     return res.status(200).json({
       status: 'success',
+      faqs,
     });
   } catch (error) {
     return res.status(500).json({
@@ -44,3 +44,16 @@ export default async (req: Request, res: Response): Promise<Response> => {
     });
   }
 };
+
+function isFaq(intent: IIntent): boolean {
+  return intent.action === 'faq';
+}
+
+function filterQuestions(intent: IIntent) {
+  return {
+    name: intent.displayName,
+    question: intent.trainingPhrases?.[0].parts
+      ?.reduce((question: string, part: IPart) => question + part.text, ''),
+    answer: intent.messages?.[0].text?.text?.[0],
+  };
+}
