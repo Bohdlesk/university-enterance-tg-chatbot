@@ -46,7 +46,7 @@ export default async (req: Request, res: Response): Promise<Response> => {
 };
 
 function isFaq(intent: IIntent): boolean {
-  return intent.action === '';
+  return intent.action === 'faq';
 }
 
 function filterQuestions(intent: IIntent) {
