@@ -1,4 +1,11 @@
-import { DataTypes } from 'sequelize';
+/* eslint-disable camelcase */
+/* eslint-disable @typescript-eslint/no-empty-interface */
+/* eslint-disable @typescript-eslint/lines-between-class-members */
+/* eslint-disable lines-between-class-members */
+
+import {
+  DataTypes, Model,
+} from 'sequelize';
 
 import { db } from '../bd';
 import UserType from './UserType';
@@ -6,16 +13,27 @@ import UserRole from './UserRole';
 
 export interface IUser {
   id: number;
-  username?: string;
+  username?: string | null;
   name: string;
-  phoneNumber?: string | null;
-  userType?: number;
+  phone_number?: string | null;
+  type_name?: string;
   city: string;
-  roleId?: number;
-  state: string;
+  role_name?: string;
+  state: JSON;
 }
 
-export default db.define('users', {
+class User extends Model<IUser> implements IUser {
+  public id!: number;
+  public username!: string | null;
+  public name!: string;
+  public phone_number!: string | null;
+  public type_name!: string;
+  public city!: string;
+  public role_name!: string;
+  public state!: JSON;
+}
+
+User.init({
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
@@ -61,5 +79,9 @@ export default db.define('users', {
   },
 },
 {
+  sequelize: db,
+  tableName: 'users',
   timestamps: false,
 });
+
+export default User;

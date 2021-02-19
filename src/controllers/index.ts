@@ -21,6 +21,7 @@ export {
   createUserController,
   deleteUserController,
   getAllUsersController,
+  getUserByIdController,
   updateUserDataController,
   getUsersAmountController,
 } from './users';
