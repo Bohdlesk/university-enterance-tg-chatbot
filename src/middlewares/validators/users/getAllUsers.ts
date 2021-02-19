@@ -7,7 +7,6 @@ const router = express.Router();
 const validator = createValidator();
 
 const querySchema = Joi.object({
-  id: Joi.number(),
   username: Joi.string(),
   name: Joi.string(),
   phone_number: Joi.string().regex(/^\+(?:[0-9] ?){6,14}[0-9]$/),
