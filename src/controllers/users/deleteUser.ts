@@ -5,15 +5,14 @@ import { deleteUserFromCache } from '../../utils';
 
 export default async (req: Request, res: Response): Promise<Response> => {
   try {
-    const { id } = req.query;
+    const id: number = parseInt(req.query.id as string, 10);
     const isDeleted = await User.destroy({ where: { id } });
 
     if (!isDeleted) {
       throw new Error('User Does not exist');
     }
 
-    const userKey = `userid_${id}`;
-    deleteUserFromCache(userKey);
+    deleteUserFromCache(id);
 
     return res.status(200).json({
       status: 'success',

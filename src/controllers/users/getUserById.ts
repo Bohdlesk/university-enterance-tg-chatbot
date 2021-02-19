@@ -5,9 +5,8 @@ import { User } from '../../models';
 
 export default async (req: Request, res: Response): Promise<Response> => {
   try {
-    const { id } = req.params;
-    const userKey = `userid_${id}`;
-    const userFromCache = await getUserFromCache(userKey);
+    const id: number = parseInt(req.params.id as string, 10);
+    const userFromCache = await getUserFromCache(id);
 
     if (userFromCache) {
       return res.status(200).json({
