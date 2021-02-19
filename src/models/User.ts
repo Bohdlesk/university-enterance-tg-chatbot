@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 /* eslint-disable @typescript-eslint/no-empty-interface */
 /* eslint-disable @typescript-eslint/lines-between-class-members */
 /* eslint-disable lines-between-class-members */
@@ -14,10 +15,10 @@ export interface IUser {
   id: number;
   username?: string | null;
   name: string;
-  'phone_number'?: string | null;
-  'type_name'?: string;
+  phone_number?: string | null;
+  type_name?: string;
   city: string;
-  'role_name'?: string;
+  role_name?: string;
   state: JSON;
 }
 
@@ -25,10 +26,10 @@ class User extends Model<IUser> implements IUser {
   public id!: number;
   public username!: string | null;
   public name!: string;
-  public 'phone_number'!: string | null;
-  public 'type_name'!: string;
+  public phone_number!: string | null;
+  public type_name!: string;
   public city!: string;
-  public 'role_name'!: string;
+  public role_name!: string;
   public state!: JSON;
 }
 
