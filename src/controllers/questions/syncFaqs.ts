@@ -5,7 +5,7 @@ import dialogflow from '@google-cloud/dialogflow';
 import { google } from '@google-cloud/dialogflow/build/protos/protos';
 
 import { dialogflowProjectId } from '../../const';
-import { FAQ } from '../../models';
+import { FAQ, IFaq } from '../../models';
 import IIntent = google.cloud.dialogflow.v2.IIntent;
 import IPart = google.cloud.dialogflow.v2.Intent.TrainingPhrase.IPart;
 import IntentView = google.cloud.dialogflow.v2.IntentView;
@@ -38,9 +38,7 @@ const listIntents = async () => {
 export default async (req: Request, res: Response): Promise<Response> => {
   try {
     const intents = await listIntents();
-
-    const faqs = intents.filter(isFaq).map(filterQuestions);
-    console.log(faqs);
+    const faqs = intents.filter(isFaq).map(filterQuestions) as IFaq[];
 
     await FAQ.bulkCreate(faqs, {
       updateOnDuplicate: ['question', 'answer'],

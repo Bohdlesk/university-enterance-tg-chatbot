@@ -17,7 +17,7 @@ const db = new Sequelize(
   },
 );
 
-async function connectToDB() {
+async function connectToDB(): Promise<void> {
   try {
     await db.authenticate();
     console.log('Connection has been established successfully.');

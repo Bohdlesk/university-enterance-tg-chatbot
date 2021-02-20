@@ -26,7 +26,6 @@ app.use('/api/v1', APIV1Router);
 
 app.use(loggerMiddlewares.errorLogger);
 
-
 // connect to database
 connectToDB();
 
