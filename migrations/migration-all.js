@@ -62,7 +62,6 @@ module.exports = {
         type: Sequelize.STRING(2000),
         allowNull: false,
       },
-      updatedAt: Sequelize.DATE,
       createdAt: Sequelize.DATE,
     });
     await queryInterface.createTable('users', {
@@ -77,7 +76,6 @@ module.exports = {
       },
       name: {
         type: Sequelize.STRING,
-        allowNull: false,
       },
       phone_number: {
         type: Sequelize.STRING,
@@ -103,7 +101,6 @@ module.exports = {
       },
       city: {
         type: Sequelize.STRING,
-        allowNull: false,
       },
       state: {
         type: Sequelize.JSON,
