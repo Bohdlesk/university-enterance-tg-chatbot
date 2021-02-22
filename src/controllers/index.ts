@@ -10,6 +10,7 @@ export {
   getFaqListController,
   syncFaqsController,
   incremntFaqStatController,
+  excelDownloadUnansweredQuestionsController,
 } from './questions';
 
 export {
