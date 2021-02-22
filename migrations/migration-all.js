@@ -62,7 +62,6 @@ module.exports = {
         type: Sequelize.STRING(2000),
         allowNull: false,
       },
-      updatedAt: Sequelize.DATE,
       createdAt: Sequelize.DATE,
     });
     await queryInterface.createTable('users', {
