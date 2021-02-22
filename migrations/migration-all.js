@@ -62,8 +62,14 @@ module.exports = {
         type: Sequelize.STRING(2000),
         allowNull: false,
       },
-      createdAt: Sequelize.DATE,
-    });
+            createdAt: {
+                type: Sequelize.DATE,
+                defaultValue: Date.now()
+            }
+        },
+        {
+            timestamps: false,
+        });
     await queryInterface.createTable('users', {
       id: {
         type: Sequelize.INTEGER,

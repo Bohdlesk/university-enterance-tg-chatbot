@@ -13,4 +13,8 @@ export default db.define('unanswered_questions', {
     type: DataTypes.STRING(2000),
     allowNull: false,
   },
-});
+  createdAt: {
+    type: DataTypes.DATE,
+    defaultValue: Date.now(),
+  },
+}, { timestamps: false });
