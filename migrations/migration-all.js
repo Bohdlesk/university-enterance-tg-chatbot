@@ -76,7 +76,6 @@ module.exports = {
       },
       name: {
         type: Sequelize.STRING,
-        allowNull: false,
       },
       phone_number: {
         type: Sequelize.STRING,
@@ -102,7 +101,6 @@ module.exports = {
       },
       city: {
         type: Sequelize.STRING,
-        allowNull: false,
       },
       state: {
         type: Sequelize.JSON,
