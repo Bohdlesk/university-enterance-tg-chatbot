@@ -2,7 +2,7 @@ import UserRole from './UserRole';
 import UserType from './UserType';
 import User, { IUser } from './User';
 import UnansweredQuestion from './UnansweredQuestion';
-import FAQ from './FAQ';
+import FAQ, { IFaq } from './FAQ';
 import BotSetting from './BotSetting';
 
 export {
@@ -12,5 +12,6 @@ export {
   IUser,
   UnansweredQuestion,
   FAQ,
+  IFaq,
   BotSetting,
 };

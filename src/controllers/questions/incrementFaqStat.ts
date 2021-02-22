@@ -11,7 +11,7 @@ export default async (req: Request, res: Response): Promise<Response> => {
     if (!question) {
       throw new Error(`Question ${req.query.name} does not exist`);
     }
-    const oldStats: any = question.get('stats');
+    const oldStats: number = question.get('stats');
     await FAQ.update({ stats: oldStats + 1 }, {
       where: {
         name: req.query.name,
