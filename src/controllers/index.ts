@@ -11,6 +11,7 @@ export {
   syncFaqsController,
   incremntFaqStatController,
   excelDownloadUnansweredQuestionsController,
+  clearUnansweredQuestionsDataBaseController,
 } from './questions';
 
 export {

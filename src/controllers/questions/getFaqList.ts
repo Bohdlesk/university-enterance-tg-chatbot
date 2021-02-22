@@ -16,7 +16,7 @@ export default async (req: Request, res: Response): Promise<Response> => {
       where,
     };
     const questions = await FAQ.findAll(params);
-    if (questions.length === 0) throw new Error('FAQ lis is empty, synchronize the database!')
+    if (questions.length === 0) throw new Error('FAQ lis is empty, synchronize the database!');
     return res.status(200).json({
       status: 'success',
       questions,
