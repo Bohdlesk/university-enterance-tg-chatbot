@@ -5,7 +5,7 @@ import { pass } from '../const';
 
 const hash = crypto.createHash('sha256').update(pass).digest('hex');
 
-export default (req: Request, res: Response, next: NextFunction): Response | void => {
+export default (req: Request, res: Response, next: NextFunction): void => {
   if (req.headers['pass-hash'] && hash === req.headers['pass-hash']) {
     next();
     return;
