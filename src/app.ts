@@ -1,6 +1,4 @@
 import express from 'express';
-import bodyParser from 'body-parser';
-import cors from 'cors';
 
 import { client } from './redisClient';
 
@@ -14,18 +12,10 @@ import {
 
 const app = express();
 
-// cors setup
-const corsOptions = {
-  origin: '*',
-  optionsSuccessStatus: 200,
-};
-
 app.use(express.json());
-app.use(bodyParser.json());
-app.use(cors(corsOptions));
+app.use(loggerMiddlewares.responseLogger);
 app.use('/api/v1', authMiddleware);
 app.use('/api/v1', validatorsMiddlewares);
-app.use(loggerMiddlewares.responseLogger);
 
 app.use('/api/v1', APIV1Router);
 
