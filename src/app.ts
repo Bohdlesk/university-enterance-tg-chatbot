@@ -6,7 +6,11 @@ import { client } from './redisClient';
 
 import { connectToDB } from './bd';
 import { APIV1Router } from './routes';
-import { validatorsMiddlewares, loggerMiddlewares } from './middlewares';
+import {
+  validatorsMiddlewares,
+  loggerMiddlewares,
+  authMiddleware,
+} from './middlewares';
 
 const app = express();
 
@@ -19,6 +23,7 @@ const corsOptions = {
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(cors(corsOptions));
+app.use('/api/v1', authMiddleware);
 app.use('/api/v1', validatorsMiddlewares);
 app.use(loggerMiddlewares.responseLogger);
 
