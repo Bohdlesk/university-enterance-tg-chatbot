@@ -1,11 +1,7 @@
-import { Router } from 'express';
+import addAdminValidatorMiddleware from './addAdmin';
+import deleteAdminValueValidatorMiddleware from './deleteAdmin';
 
-import addAdminMiddleware from './addAdmin';
-import deleteAdminValueMiddleware from './deleteAdmin';
-
-const adminsValidatorsMiddleware = Router();
-
-adminsValidatorsMiddleware.use('/add', addAdminMiddleware);
-adminsValidatorsMiddleware.use('/delete', deleteAdminValueMiddleware);
-
-export default adminsValidatorsMiddleware;
+export {
+  addAdminValidatorMiddleware,
+  deleteAdminValueValidatorMiddleware,
+};

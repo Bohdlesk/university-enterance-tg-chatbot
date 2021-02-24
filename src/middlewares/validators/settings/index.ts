@@ -1,11 +1,7 @@
-import { Router } from 'express';
+import changeSettingsValidatorMiddleware from './changeSettings';
+import getSettingsValueValidatorMiddleware from './getSettingsValue';
 
-import changeSettingsMiddleware from './changeSettings';
-import getSettingsValueMiddleware from './getSettingsValue';
-
-const settingsValidatorsMiddleware = Router();
-
-settingsValidatorsMiddleware.use('/change', changeSettingsMiddleware);
-settingsValidatorsMiddleware.use('/get', getSettingsValueMiddleware);
-
-export default settingsValidatorsMiddleware;
+export {
+  changeSettingsValidatorMiddleware,
+  getSettingsValueValidatorMiddleware,
+};

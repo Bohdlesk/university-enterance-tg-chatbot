@@ -1,13 +1,19 @@
 import { Router } from 'express';
 
-import {
-  changeSettingsController,
-  getSettingsValueController,
-} from '../controllers';
+import * as constrollers from '../controllers/settings';
+import * as validators from '../middlewares/validators/settings';
 
 const settingsRouter = Router();
 
-settingsRouter.put('/change', changeSettingsController);
-settingsRouter.get('/get', getSettingsValueController);
+settingsRouter.put(
+  '/change',
+  validators.changeSettingsValidatorMiddleware,
+  constrollers.changeSettingsController,
+);
+settingsRouter.get(
+  '/get',
+  validators.getSettingsValueValidatorMiddleware,
+  constrollers.getSettingsValueController,
+);
 
 export { settingsRouter };

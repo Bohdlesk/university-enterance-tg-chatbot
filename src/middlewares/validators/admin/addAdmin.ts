@@ -1,14 +1,18 @@
 import * as Joi from 'joi';
-import express from 'express';
-import { createValidator } from 'express-joi-validation';
+import { Request, Response, NextFunction } from 'express';
 
-const router = express.Router();
-const validator = createValidator();
+import { buildValidationErrorResponse } from '../../../utils';
 
-const querySchema = Joi.object({
-  username: Joi.string().required(),
-});
+export default (req: Request, res: Response, next: NextFunction): void => {
+  const querySchema = Joi.object({
+    username: Joi.string().required(),
+  });
 
-router.put('/', validator.query(querySchema));
+  const { error: queryErrors } = querySchema.validate(req.query);
 
-export default router;
+  if (queryErrors) {
+    res.status(400).json(buildValidationErrorResponse({ queryErrors }));
+  } else {
+    next();
+  }
+};
