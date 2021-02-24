@@ -1,6 +1,6 @@
 import { Router } from 'express';
 
-import * as constrollers from '../controllers/questions';
+import * as controllers from '../controllers/questions';
 import * as validators from '../middlewares/validators/questions';
 
 const questionsRouter = Router();
@@ -8,28 +8,28 @@ const questionsRouter = Router();
 questionsRouter.post(
   '/',
   validators.createQuestionValidatorMiddleware,
-  constrollers.createQuestionController,
+  controllers.createQuestionController,
 );
 questionsRouter.get(
   '/unanswered',
   validators.getUnansweredQuestionsListValidatorMiddleware,
-  constrollers.getUnansweredQuestionsListController,
+  controllers.getUnansweredQuestionsListController,
 );
-questionsRouter.get('/unanswered/excel', constrollers.excelDownloadUnansweredQuestionsController);
+questionsRouter.get('/unanswered/excel', controllers.excelDownloadUnansweredQuestionsController);
 questionsRouter.delete(
   '/unanswered/clear',
-  constrollers.clearUnansweredQuestionsDataBaseController,
+  controllers.clearUnansweredQuestionsDataBaseController,
 );
 questionsRouter.get(
   '/faq',
   validators.getFaqListValidatorMiddleware,
-  constrollers.getFaqListController,
+  controllers.getFaqListController,
 );
-questionsRouter.put('/faq/sync', constrollers.syncFaqsController);
+questionsRouter.put('/faq/sync', controllers.syncFaqsController);
 questionsRouter.put(
   '/faq/increment',
   validators.faqCounterIncrementValidatorMiddleware,
-  constrollers.incremntFaqStatController,
+  controllers.incremntFaqStatController,
 );
 
 export { questionsRouter };

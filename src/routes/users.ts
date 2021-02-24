@@ -1,6 +1,6 @@
 import { Router } from 'express';
 
-import * as constrollers from '../controllers/users';
+import * as controllers from '../controllers/users';
 
 import * as validators from '../middlewares/validators/users';
 
@@ -9,24 +9,24 @@ const usersRouter = Router();
 usersRouter.get(
   '/statistics',
   validators.getUsersStatisticValidatorMiddleware,
-  constrollers.getUsersAmountController,
+  controllers.getUsersAmountController,
 );
-usersRouter.post('/', validators.createUserValidatorMiddleware, constrollers.createUserController);
+usersRouter.post('/', validators.createUserValidatorMiddleware, controllers.createUserController);
 usersRouter.delete(
   '/',
   validators.deleteUserValidatorMiddleware,
-  constrollers.deleteUserController,
+  controllers.deleteUserController,
 );
-usersRouter.get('/', validators.getAllUserValidatorMiddleware, constrollers.getAllUsersController);
+usersRouter.get('/', validators.getAllUserValidatorMiddleware, controllers.getAllUsersController);
 usersRouter.get(
   '/:id',
   validators.getUserByIdValidatorMiddleware,
-  constrollers.getUserByIdController,
+  controllers.getUserByIdController,
 );
 usersRouter.put(
   '/',
   validators.updateUserValidatorMiddleware,
-  constrollers.updateUserDataController,
+  controllers.updateUserDataController,
 );
 
 export { usersRouter };
