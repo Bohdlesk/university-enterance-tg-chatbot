@@ -5,32 +5,37 @@ import { UnansweredQuestion, IUnansweredQuestions } from '../../models';
 export default async (req: Request, res: Response): Promise<void> => {
   try {
     const questions: IUnansweredQuestions[] = await UnansweredQuestion.findAll();
-    if (questions.length === 0) throw new Error('Questions lis is empty');
+    if (questions.length === 0) {
+      res.status(404).json({
+        status: 'error',
+        message: 'Questions list is empty',
+      });
+    } else {
+      const workbook = new excel.Workbook();
+      const worksheet = workbook.addWorksheet('unanswered_questions');
 
-    const workbook = new excel.Workbook();
-    const worksheet = workbook.addWorksheet('unanswered_questions');
+      worksheet.columns = [
+        { header: 'Id', key: 'id', width: 10 },
+        { header: 'Question', key: 'question', width: 100 },
+        { header: 'Created', key: 'createdAt', width: 25 },
+      ] as excel.Column[];
 
-    worksheet.columns = [
-      { header: 'Id', key: 'id', width: 10 },
-      { header: 'Question', key: 'question', width: 100 },
-      { header: 'Created', key: 'createdAt', width: 25 },
-    ] as excel.Column[];
+      worksheet.addRows(questions);
 
-    worksheet.addRows(questions);
+      res.setHeader(
+        'Content-Type',
+        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+      );
+      res.setHeader(
+        'Content-Disposition',
+        'attachment; filename=unanswered_questions.xlsx',
+      );
 
-    res.setHeader(
-      'Content-Type',
-      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-    );
-    res.setHeader(
-      'Content-Disposition',
-      'attachment; filename=unanswered_questions.xlsx',
-    );
-
-    await workbook.xlsx.write(res);
-    res.status(200).json({
-      ststus: 'success',
-    });
+      await workbook.xlsx.write(res);
+      res.status(200).json({
+        ststus: 'success',
+      });
+    }
   } catch (error) {
     res.status(500).json({
       message: error.message,
