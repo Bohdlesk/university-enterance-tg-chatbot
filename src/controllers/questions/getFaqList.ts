@@ -17,12 +17,17 @@ export default async (req: Request, res: Response): Promise<void> => {
     };
     const questions = await FAQ.findAll(params);
     if (questions.length === 0) {
-      throw new Error('FAQ lis is empty, synchronize the database!');
+      res.status(200).json({
+        status: 'success',
+        message: 'FAQ list is empty, synchronize the database!',
+        questions: {},
+      });
+    } else {
+      res.status(200).json({
+        status: 'success',
+        questions,
+      });
     }
-    res.status(200).json({
-      status: 'success',
-      questions,
-    });
   } catch (error) {
     res.status(500).json({
       message: error.message,

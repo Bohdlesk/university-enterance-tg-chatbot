@@ -9,15 +9,19 @@ export default async (req: Request, res: Response): Promise<void> => {
     const users = await User.findAll({ where: queryParams });
 
     if (users.length === 0) {
-      throw new Error('Not found');
+      res.status(200).json({
+        status: 'success',
+        message: 'Users not found',
+        users: {},
+      });
+    } else {
+      saveUsersToCache(users);
+
+      res.status(200).json({
+        status: 'success',
+        users,
+      });
     }
-
-    saveUsersToCache(users);
-
-    res.status(200).json({
-      status: 'success',
-      users,
-    });
   } catch (error) {
     res.status(500).json({
       message: error.message,

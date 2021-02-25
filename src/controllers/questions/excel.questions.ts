@@ -28,7 +28,9 @@ export default async (req: Request, res: Response): Promise<void> => {
     );
 
     await workbook.xlsx.write(res);
-    res.status(200).end();
+    res.status(200).json({
+      ststus: 'success',
+    });
   } catch (error) {
     res.status(500).json({
       message: error.message,

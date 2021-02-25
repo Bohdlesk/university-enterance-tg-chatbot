@@ -17,16 +17,19 @@ export default async (req: Request, res: Response): Promise<void> => {
 
     const user = await User.findByPk(id);
 
-    if (user === null) {
-      throw new Error('Not found');
+    if (!user) {
+      res.status(404).json({
+        status: 'error',
+        message: `User with id=${id} not found`,
+      });
+    } else {
+      saveUserToCache(user);
+
+      res.status(200).json({
+        status: 'success',
+        user,
+      });
     }
-
-    saveUserToCache(user);
-
-    res.status(200).json({
-      status: 'success',
-      user,
-    });
   } catch (error) {
     res.status(500).json({
       message: error.message,

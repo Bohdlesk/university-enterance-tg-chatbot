@@ -13,12 +13,17 @@ export default async (req: Request, res: Response): Promise<void> => {
       },
     });
     if (admins.length === 0) {
-      throw new Error('Admin users not found');
+      res.status(200).json({
+        status: 'success',
+        users: {},
+        message: 'Admin users not found',
+      });
+    } else {
+      res.status(200).json({
+        status: 'success',
+        users: admins,
+      });
     }
-    res.status(200).json({
-      status: 'success',
-      users: admins,
-    });
   } catch (error) {
     res.status(500).json({
       message: error.message,

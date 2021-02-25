@@ -9,18 +9,22 @@ export default async (req: Request, res: Response): Promise<void> => {
       },
     });
     if (!question) {
-      throw new Error(`Question ${req.query.name} does not exist`);
+      res.status(404).json({
+        status: 'error',
+        message: `Question ${req.query.name} does not exist`,
+      });
+    } else {
+      const oldStats: number = question.get('stats');
+      await FAQ.update({ stats: oldStats + 1 }, {
+        where: {
+          name: req.query.name,
+        },
+        returning: true,
+      });
+      res.status(200).json({
+        status: 'success',
+      });
     }
-    const oldStats: number = question.get('stats');
-    await FAQ.update({ stats: oldStats + 1 }, {
-      where: {
-        name: req.query.name,
-      },
-      returning: true,
-    });
-    res.status(200).json({
-      status: 'success',
-    });
   } catch (error) {
     res.status(500).json({
       message: error.message,

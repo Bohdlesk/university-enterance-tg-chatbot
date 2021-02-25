@@ -13,7 +13,12 @@ export default async (req: Request, res: Response): Promise<void> => {
       user,
     });
   } catch (error) {
-    res.status(500).json({
+    const statusCode: number = error.errors && error.errors
+      .find(({ type }: { type: string }) => (
+        type === 'unique violation'
+      )) ? 409 : 500;
+
+    res.status(statusCode).json({
       message: error.message,
       error,
     });

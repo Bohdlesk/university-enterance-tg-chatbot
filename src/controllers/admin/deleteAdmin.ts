@@ -10,12 +10,16 @@ export default async (req: Request, res: Response): Promise<void> => {
       returning: true,
     });
     if (!adminDeleted[0]) {
-      throw new Error('User Does not exist');
+      res.status(404).json({
+        status: 'error',
+        message: `User with id=${id} does not exist`,
+      });
+    } else {
+      res.status(200).json({
+        status: 'success',
+        user: adminDeleted[1][0].get(),
+      });
     }
-    res.status(200).json({
-      status: 'success',
-      user: adminDeleted[1][0].get(),
-    });
   } catch (error) {
     res.status(500).json({
       message: error.message,

@@ -13,12 +13,16 @@ export default async (req: Request, res: Response): Promise<void> => {
     }
     const settingsValue = await BotSetting.findAll(params);
     if (settingsValue.length === 0) {
-      throw new Error(`Not found, check value setting name: ${req.query.name}`);
+      res.status(404).json({
+        status: 'error',
+        message: `Not found, check value setting name: ${req.query.name}`,
+      });
+    } else {
+      res.status(200).json({
+        status: 'success',
+        settings: settingsValue[0],
+      });
     }
-    res.status(200).json({
-      status: 'success',
-      settings: settingsValue[0],
-    });
   } catch (error) {
     res.status(500).json({
       message: error.message,
