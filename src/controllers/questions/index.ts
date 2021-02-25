@@ -3,7 +3,7 @@ import getUnansweredQuestionsListController from './getUnansweredQuestionsList';
 import getFaqListController from './getFaqList';
 import syncFaqsController from './syncFaqs';
 import incremntFaqStatController from './incrementFaqStat';
-import excelDownloadUnansweredQuestionsController from './excel.questions';
+import excelDownloadUnansweredQuestionsController from './excelQuestions';
 import clearUnansweredQuestionsDataBaseController from './clearUnansweredQuestionsDataBase';
 
 export {
