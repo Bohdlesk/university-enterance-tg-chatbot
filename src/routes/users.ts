@@ -1,21 +1,32 @@
 import { Router } from 'express';
 
-import {
-  createUserController,
-  deleteUserController,
-  getAllUsersController,
-  getUserByIdController,
-  updateUserDataController,
-  getUsersAmountController,
-} from '../controllers';
+import * as controllers from '../controllers/users';
+
+import * as validators from '../middlewares/validators/users';
 
 const usersRouter = Router();
 
-usersRouter.get('/statistics', getUsersAmountController);
-usersRouter.post('/', createUserController);
-usersRouter.delete('/', deleteUserController);
-usersRouter.get('/', getAllUsersController);
-usersRouter.get('/:id', getUserByIdController);
-usersRouter.put('/', updateUserDataController);
+usersRouter.get(
+  '/statistics',
+  validators.getUsersStatisticValidatorMiddleware,
+  controllers.getUsersAmountController,
+);
+usersRouter.post('/', validators.createUserValidatorMiddleware, controllers.createUserController);
+usersRouter.delete(
+  '/',
+  validators.deleteUserValidatorMiddleware,
+  controllers.deleteUserController,
+);
+usersRouter.get('/', validators.getAllUserValidatorMiddleware, controllers.getAllUsersController);
+usersRouter.get(
+  '/:id',
+  validators.getUserByIdValidatorMiddleware,
+  controllers.getUserByIdController,
+);
+usersRouter.put(
+  '/',
+  validators.updateUserValidatorMiddleware,
+  controllers.updateUserDataController,
+);
 
 export { usersRouter };

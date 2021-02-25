@@ -1,15 +1,18 @@
 import * as Joi from 'joi';
-import express from 'express';
-import { createValidator } from 'express-joi-validation';
+import { Request, Response, NextFunction } from 'express';
 
-const router = express.Router();
+import { buildValidationErrorResponse } from '../../../utils';
 
-const validator = createValidator();
+export default (req: Request, res: Response, next: NextFunction): void => {
+  const paramsSchema = Joi.object({
+    id: Joi.number().required(),
+  });
 
-const paramsSchema = Joi.object({
-  id: Joi.number().required(),
-});
+  const { error: paramsErrors } = paramsSchema.validate(req.params);
 
-router.get('/:id', validator.params(paramsSchema));
-
-export default router;
+  if (paramsErrors) {
+    res.status(400).json(buildValidationErrorResponse({ paramsErrors }));
+  } else {
+    next();
+  }
+};
