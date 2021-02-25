@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { FAQ } from '../../models';
 
-export default async (req: Request, res: Response): Promise<Response> => {
+export default async (req: Request, res: Response): Promise<void> => {
   try {
     const question = await FAQ.findOne({
       where: {
@@ -18,11 +18,11 @@ export default async (req: Request, res: Response): Promise<Response> => {
       },
       returning: true,
     });
-    return res.status(200).json({
+    res.status(200).json({
       status: 'success',
     });
   } catch (error) {
-    return res.status(500).json({
+    res.status(500).json({
       message: error.message,
       error,
     });

@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { BotSetting } from '../../models';
 
-export default async (req: Request, res: Response): Promise<Response> => {
+export default async (req: Request, res: Response): Promise<void> => {
   try {
     let params = {};
     if (req.query.name) {
@@ -15,12 +15,12 @@ export default async (req: Request, res: Response): Promise<Response> => {
     if (settingsValue.length === 0) {
       throw new Error(`Not found, check value setting name: ${req.query.name}`);
     }
-    return res.status(200).json({
+    res.status(200).json({
       status: 'success',
       settings: settingsValue[0],
     });
   } catch (error) {
-    return res.status(500).json({
+    res.status(500).json({
       message: error.message,
       error,
     });

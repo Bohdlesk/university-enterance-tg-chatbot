@@ -35,7 +35,7 @@ const listIntents = async () => {
   return response;
 };
 
-export default async (req: Request, res: Response): Promise<Response> => {
+export default async (req: Request, res: Response): Promise<void> => {
   try {
     const intents = await listIntents();
     const faqs = intents.filter(isFaq).map(filterQuestions) as IFaq[];
@@ -44,12 +44,12 @@ export default async (req: Request, res: Response): Promise<Response> => {
       updateOnDuplicate: ['question', 'answer'],
     });
 
-    return res.status(200).json({
+    res.status(200).json({
       status: 'success',
       faqs,
     });
   } catch (error) {
-    return res.status(500).json({
+    res.status(500).json({
       message: error.message,
       error,
     });
