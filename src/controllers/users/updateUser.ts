@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 import { User } from '../../models';
 import { saveUserToCache } from '../../utils';
 
-export default async (req: Request, res: Response): Promise<Response> => {
+export default async (req: Request, res: Response): Promise<void> => {
   try {
     const { id } = req.query;
     const updationResult = await User.update(req.body, {
@@ -12,18 +12,26 @@ export default async (req: Request, res: Response): Promise<Response> => {
     });
 
     if (!updationResult[0]) {
-      throw new Error('User does not updated');
+      res.status(404).json({
+        status: 'error',
+        message: `User with id=${id} does not found`,
+      });
+    } else {
+      const user = updationResult[1][0].get();
+      saveUserToCache(user);
+
+      res.status(200).json({
+        status: 'success',
+        user,
+      });
     }
-
-    const user = updationResult[1][0].get();
-    saveUserToCache(user);
-
-    return res.status(200).json({
-      status: 'success',
-      user,
-    });
   } catch (error) {
-    return res.status(500).json({
+    const statusCode: number = error.errors && error.errors
+      .find(({ type }: { type: string }) => (
+        type === 'unique violation'
+      )) ? 409 : 500;
+
+    res.status(statusCode).json({
       message: error.message,
       error,
     });

@@ -2,7 +2,7 @@ import { FindOptions } from 'sequelize';
 import { Request, Response } from 'express';
 import { UnansweredQuestion } from '../../models';
 
-export default async (req: Request, res: Response): Promise<Response> => {
+export default async (req: Request, res: Response): Promise<void> => {
   try {
     let where = {};
     if (req.query.id) {
@@ -14,12 +14,20 @@ export default async (req: Request, res: Response): Promise<Response> => {
       where,
     };
     const questions = await UnansweredQuestion.findAll(params);
-    return res.status(200).json({
-      status: 'success',
-      questions,
-    });
+    if (questions.length === 0) {
+      res.status(200).json({
+        status: 'success',
+        message: 'Unanswered questions list is empty',
+        questions: {},
+      });
+    } else {
+      res.status(200).json({
+        status: 'success',
+        questions,
+      });
+    }
   } catch (error) {
-    return res.status(500).json({
+    res.status(500).json({
       message: error.message,
       error,
     });

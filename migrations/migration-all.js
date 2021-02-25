@@ -62,14 +62,14 @@ module.exports = {
         type: Sequelize.STRING(2000),
         allowNull: false,
       },
-            createdAt: {
-                type: Sequelize.DATE,
-                defaultValue: Date.now()
-            }
-        },
-        {
-            timestamps: false,
-        });
+      createdAt: {
+        type: Sequelize.DATE,
+        defaultValue: Date.now(),
+      },
+    },
+    {
+      timestamps: false,
+    });
     await queryInterface.createTable('users', {
       id: {
         type: Sequelize.INTEGER,
@@ -82,7 +82,6 @@ module.exports = {
       },
       name: {
         type: Sequelize.STRING,
-        allowNull: true
       },
       phone_number: {
         type: Sequelize.STRING,
@@ -108,7 +107,6 @@ module.exports = {
       },
       city: {
         type: Sequelize.STRING,
-        allowNull: true
       },
       state: {
         type: Sequelize.JSON,

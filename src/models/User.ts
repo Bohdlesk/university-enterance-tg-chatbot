@@ -43,7 +43,6 @@ User.init({
   },
   name: {
     type: DataTypes.STRING,
-    allowNull: true,
   },
   phone_number: {
     type: DataTypes.STRING,
@@ -69,7 +68,6 @@ User.init({
   },
   city: {
     type: DataTypes.STRING,
-    allowNull: true,
   },
   state: {
     type: DataTypes.JSON,

@@ -1,10 +1,24 @@
-import winston from 'winston';
-import expressWinston from 'express-winston';
+/* eslint-disable @typescript-eslint/no-unused-vars */
 
-export default expressWinston.logger({
+import winston from 'winston';
+import { logger, FilterRequest, FilterResponse } from 'express-winston';
+import { IncomingHttpHeaders } from 'http';
+
+const authFilter = (req: FilterRequest, propName: string):
+  FilterResponse | IncomingHttpHeaders => {
+  if (propName !== 'headers') {
+    return req[propName];
+  }
+
+  const { 'pass-hash': passHash, ...rest } = req.headers;
+  return rest;
+};
+
+export default logger({
   transports: [
     new winston.transports.Console(),
   ],
+  requestFilter: authFilter,
   format: winston.format.combine(
     winston.format.timestamp(),
     winston.format.colorize(),

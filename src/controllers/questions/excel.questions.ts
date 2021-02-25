@@ -1,10 +1,10 @@
 import { Request, Response } from 'express';
 import excel from 'exceljs';
-import { UnansweredQuestion } from '../../models';
+import { UnansweredQuestion, IUnansweredQuestions } from '../../models';
 
-export default async (req: Request, res: Response): Promise<any> => {
+export default async (req: Request, res: Response): Promise<void> => {
   try {
-    const questions: object[] = await UnansweredQuestion.findAll();
+    const questions: IUnansweredQuestions[] = await UnansweredQuestion.findAll();
     if (questions.length === 0) throw new Error('Questions lis is empty');
 
     const workbook = new excel.Workbook();
@@ -24,14 +24,15 @@ export default async (req: Request, res: Response): Promise<any> => {
     );
     res.setHeader(
       'Content-Disposition',
-      'attachment; filename=' + 'unanswered_questions.xlsx',
+      'attachment; filename=unanswered_questions.xlsx',
     );
 
-    return workbook.xlsx.write(res).then(() => {
-      res.status(200).end();
+    await workbook.xlsx.write(res);
+    res.status(200).json({
+      ststus: 'success',
     });
   } catch (error) {
-    return res.status(500).json({
+    res.status(500).json({
       message: error.message,
       error,
     });
