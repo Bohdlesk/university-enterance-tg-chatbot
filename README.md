@@ -19,6 +19,10 @@ https://www.getpostman.com/collections/8e901a8e93bdb4270446
 * ```npx sequelize-cli db:seed:all``` - mocks tables with data
 * ```npx sequelize-cli db:seed:undo``` - removes all mocked data
 
+## Requirements
+* Node.js
+* Postgresql
+* Redis
 
 ## Server setup and deployment
 
