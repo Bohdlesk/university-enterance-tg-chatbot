@@ -21,6 +21,11 @@ export default async (req: Request, res: Response): Promise<void> => {
       ] as excel.Column[];
 
       worksheet.addRows(questions);
+      const createdAtCol = worksheet.getColumn(3);
+      createdAtCol.eachCell((cell) => {
+        // eslint-disable-next-line no-param-reassign
+        cell.numFmt = 'yyyy-mm-dd\\ hh:mm:ss';
+      });
 
       res.setHeader(
         'Content-Type',
