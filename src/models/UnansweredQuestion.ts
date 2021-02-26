@@ -10,10 +10,11 @@ import { db } from '../bd';
 export interface IUnansweredQuestions {
   id: number;
   question: string;
+  createdAt: Date;
 }
 
 interface IUnansweredQuestionsCreation
-  extends Optional<IUnansweredQuestions, 'id'> {}
+  extends Optional<IUnansweredQuestions, 'id' | 'createdAt'> {}
 
 class UnansweredQuestions
   extends Model<IUnansweredQuestions, IUnansweredQuestionsCreation>
@@ -33,6 +34,10 @@ UnansweredQuestions.init({
   question: {
     type: DataTypes.STRING(2000),
     allowNull: false,
+  },
+  createdAt: {
+    type: DataTypes.DATE,
+    defaultValue: Date.now(),
   },
 }, {
   sequelize: db,
