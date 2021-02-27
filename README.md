@@ -21,7 +21,7 @@ https://www.getpostman.com/collections/8e901a8e93bdb4270446
 
 ## Requirements
 * Node.js
-* Postgresql
+* PostgreSQL
 * Redis
 
 ## Server setup and deployment
