@@ -1,11 +1,21 @@
 import { FindOptions } from 'sequelize';
 import { Request, Response } from 'express';
 import { FAQ } from '../../models';
+import saveFaqListToCache from '../../utils/saveFaqListToCache';
+import getFaqListFromCache from '../../utils/getFaqListFromCache';
 
-export default async (req: Request, res: Response): Promise<void> => {
+export default async (req: Request, res: Response): Promise<Response> => {
   try {
-    let where = {};
+    const questionsFromCache = await getFaqListFromCache();
+    if (questionsFromCache) {
+      return res.status(200).json({
+        status: 'success',
+        test: 1,
+        questions: JSON.parse(questionsFromCache),
+      });
+    }
 
+    let where = {};
     if (req.query.name) {
       where = { name: req.query.name };
     }
@@ -15,21 +25,23 @@ export default async (req: Request, res: Response): Promise<void> => {
       order: [['stats', 'DESC']],
       where,
     };
+
     const questions = await FAQ.findAll(params);
+    saveFaqListToCache(questions);
+
     if (questions.length === 0) {
-      res.status(200).json({
+      return res.status(200).json({
         status: 'success',
         message: 'FAQ list is empty, synchronize the database!',
         questions: {},
       });
-    } else {
-      res.status(200).json({
-        status: 'success',
-        questions,
-      });
     }
+    return res.status(200).json({
+      status: 'success',
+      questions,
+    });
   } catch (error) {
-    res.status(500).json({
+    return res.status(500).json({
       message: error.message,
       error,
     });
