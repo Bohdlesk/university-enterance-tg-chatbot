@@ -11,16 +11,32 @@ export default async (req: Request, res: Response): Promise<void> => {
         message: 'Questions list is empty',
       });
     } else {
+      const questionsKievDateTime = questions.map((questionItem) => ({
+        id: questionItem.id,
+        question: questionItem.question,
+        createdAt: questionItem.createdAt.toLocaleString('uk-UA', {
+          year: 'numeric',
+          month: '2-digit',
+          day: '2-digit',
+          hour: '2-digit',
+          minute: '2-digit',
+        }),
+      }));
+
       const workbook = new excel.Workbook();
       const worksheet = workbook.addWorksheet('unanswered_questions');
 
       worksheet.columns = [
         { header: 'Id', key: 'id', width: 10 },
         { header: 'Question', key: 'question', width: 100 },
-        { header: 'Created', key: 'createdAt', width: 25 },
+        {
+          header: 'Created',
+          key: 'createdAt',
+          width: 25,
+        },
       ] as excel.Column[];
 
-      worksheet.addRows(questions);
+      worksheet.addRows(questionsKievDateTime);
 
       res.setHeader(
         'Content-Type',
@@ -32,9 +48,7 @@ export default async (req: Request, res: Response): Promise<void> => {
       );
 
       await workbook.xlsx.write(res);
-      res.status(200).json({
-        ststus: 'success',
-      });
+      res.status(200).end();
     }
   } catch (error) {
     res.status(500).json({
