@@ -15,6 +15,7 @@ export default async (req: Request, res: Response): Promise<void> => {
         id: questionItem.id,
         question: questionItem.question,
         createdAt: questionItem.createdAt.toLocaleString('uk-UA', {
+          timeZone: 'Europe/Kiev',
           year: 'numeric',
           month: '2-digit',
           day: '2-digit',
