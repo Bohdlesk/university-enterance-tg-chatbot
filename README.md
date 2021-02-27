@@ -11,7 +11,7 @@ https://www.getpostman.com/collections/8e901a8e93bdb4270446
 
 ## Requirements
 * Node.js
-* Postgresql
+* PostgreSQL
 * Redis
 
 ## Server setup and deployment
@@ -28,8 +28,8 @@ https://www.getpostman.com/collections/8e901a8e93bdb4270446
 If you deploy the project to heroku you need to do the following steps:
 * Connect this build pack / script https://github.com/gerywahyunugraha/heroku-google-application-credentials-buildpack to the heroku app 
 This script will generate a file ```google-credentials.json``` with google application credentials in the root of the project
-* Create enviroment var key ```GOOGLE_CREDENTIALS``` and paste the content of google application credentials JSON file as is.
-* Set enviroment var key ```GOOGLE_APPLICATION_CREDENTIALS``` to ```google-credentials.json```
+* Create environment var key ```GOOGLE_CREDENTIALS``` and paste the content of google application credentials JSON file as is.
+* Set environment var key ```GOOGLE_APPLICATION_CREDENTIALS``` to ```google-credentials.json```
 
 
 3. Next, you need to migrate the databases. Run the following commands:
