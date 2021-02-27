@@ -9,16 +9,6 @@ Postman link
 https://www.getpostman.com/collections/8e901a8e93bdb4270446
 
 
-## DB migration
-```DATABASE_URL``` enviroment variable or ```.env``` file with it (in project's root folder)  must be set.
-
-* ```npx sequelize-cli db:create``` - creates database
-* ```npx sequelize-cli db:drop``` - drops database
-* ```npx sequelize-cli db:migrate``` - migrates all migration files (creates all tables in our case)
-* ```npx sequelize-cli db:migrate:undo``` - undoes all migrations (drop all tables in our case)
-* ```npx sequelize-cli db:seed:all``` - mocks tables with data
-* ```npx sequelize-cli db:seed:undo``` - removes all mocked data
-
 ## Requirements
 * Node.js
 * Postgresql
@@ -52,3 +42,13 @@ This script will generate a file ```google-credentials.json``` with google appli
 
 * ```npm run postinstall``` - compiles TypeScript code to JavaScript
 * ```npm run start``` - start server
+
+## DB migration
+```DATABASE_URL``` enviroment variable or ```.env``` file with it (in project's root folder)  must be set.
+
+* ```npx sequelize-cli db:create``` - creates database
+* ```npx sequelize-cli db:drop``` - drops database
+* ```npx sequelize-cli db:migrate``` - migrates all migration files (creates all tables in our case)
+* ```npx sequelize-cli db:migrate:undo``` - undoes all migrations (drop all tables in our case)
+* ```npx sequelize-cli db:seed:all``` - mocks tables with data
+* ```npx sequelize-cli db:seed:undo``` - removes all mocked data
