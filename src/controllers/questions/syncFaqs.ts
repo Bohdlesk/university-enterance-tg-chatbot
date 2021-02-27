@@ -11,8 +11,8 @@ import IPart = google.cloud.dialogflow.v2.Intent.TrainingPhrase.IPart;
 import IntentView = google.cloud.dialogflow.v2.IntentView;
 
 const intentsClient = new dialogflow.IntentsClient();
-const dialogflowFaqTag = 'faq';
 
+const dialogflowFaqTag = 'faq';
 const isFaq = (intent: IIntent): boolean => intent.action === dialogflowFaqTag;
 
 const filterQuestions = (intent: IIntent) => ({
@@ -35,7 +35,7 @@ const listIntents = async () => {
   return response;
 };
 
-export default async (req: Request, res: Response): Promise<void> => {
+export default async (req: Request, res: Response): Promise<Response> => {
   try {
     const intents = await listIntents();
     const faqs = intents.filter(isFaq).map(filterQuestions) as IFaq[];
@@ -44,12 +44,12 @@ export default async (req: Request, res: Response): Promise<void> => {
       updateOnDuplicate: ['question', 'answer'],
     });
 
-    res.status(200).json({
+    return res.status(200).json({
       status: 'success',
       faqs,
     });
   } catch (error) {
-    res.status(500).json({
+    return res.status(500).json({
       message: error.message,
       error,
     });

@@ -14,7 +14,7 @@ declare let process: {
 const conString = process.env.DATABASE_URL;
 const redisUrl = process.env.REDIS_URL;
 const dialogflowProjectId = process.env.DIALOGFLOW_PROJECT_ID;
-const cacheTTL = 86400; // 24 hours
+const cacheTTL = 10; // 24 hours
 const pass = process.env.PASS;
 
 export {

@@ -3,7 +3,7 @@ import { Op } from 'sequelize';
 import { User } from '../../models';
 import { UserRoles } from '../../models/UserRole';
 
-export default async (req: Request, res: Response): Promise<void> => {
+export default async (req: Request, res: Response): Promise<Response> => {
   try {
     const admins = await User.findAll({
       where: {
@@ -13,19 +13,18 @@ export default async (req: Request, res: Response): Promise<void> => {
       },
     });
     if (admins.length === 0) {
-      res.status(200).json({
+      return res.status(200).json({
         status: 'success',
         users: {},
         message: 'Admin users not found',
       });
-    } else {
-      res.status(200).json({
-        status: 'success',
-        users: admins,
-      });
     }
+    return res.status(200).json({
+      status: 'success',
+      users: admins,
+    });
   } catch (error) {
-    res.status(500).json({
+    return res.status(500).json({
       message: error.message,
       error,
     });
