@@ -4,20 +4,20 @@ import { FAQ } from '../../models';
 import saveFaqListToCache from '../../utils/saveFaqListToCache';
 import getFaqListFromCache from '../../utils/getFaqListFromCache';
 
-export default async (req: Request, res: Response): Promise<Response> => {
+export default async (req: Request, res: Response): Promise<void> => {
   try {
-    const questionsFromCache = await getFaqListFromCache();
-    if (questionsFromCache) {
-      return res.status(200).json({
-        status: 'success',
-        test: 1,
-        questions: JSON.parse(questionsFromCache),
-      });
-    }
-
     let where = {};
     if (req.query.name) {
       where = { name: req.query.name };
+    } else {
+      const questionsFromCache = await getFaqListFromCache();
+      if (questionsFromCache) {
+        res.status(200).json({
+          status: 'success',
+          test: 1,
+          questions: JSON.parse(questionsFromCache),
+        });
+      }
     }
     const params: FindOptions = {
       limit: parseInt(req.query.questions_amount as string, 10)
@@ -30,18 +30,18 @@ export default async (req: Request, res: Response): Promise<Response> => {
     saveFaqListToCache(questions);
 
     if (questions.length === 0) {
-      return res.status(200).json({
+      res.status(200).json({
         status: 'success',
         message: 'FAQ list is empty, synchronize the database!',
         questions: {},
       });
     }
-    return res.status(200).json({
+    res.status(200).json({
       status: 'success',
       questions,
     });
   } catch (error) {
-    return res.status(500).json({
+    res.status(500).json({
       message: error.message,
       error,
     });
