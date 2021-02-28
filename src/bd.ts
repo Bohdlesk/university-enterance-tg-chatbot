@@ -11,10 +11,13 @@ const db = new Sequelize(
         rejectUnauthorized: false,
       },
     },
+    logging: process.env.NODE_ENV === 'production'
+      ? false
+      : console.log,
   },
 );
 
-async function connectToDB() {
+async function connectToDB(): Promise<void> {
   try {
     await db.authenticate();
     console.log('Connection has been established successfully.');

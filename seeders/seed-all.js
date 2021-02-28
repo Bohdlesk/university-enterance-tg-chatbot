@@ -2,38 +2,66 @@ module.exports = {
   up: async (queryInterface) => {
     await queryInterface.bulkInsert('user_roles', [
       {
-        role_name: 'User',
+        name: 'regular',
       },
       {
-        role_name: 'Admin',
+        name: 'admin',
       },
       {
-        role_name: 'Superadmin',
+        name: 'super-admin',
       },
     ]);
     await queryInterface.bulkInsert('user_types', [
       {
-        type_name: 'Enrollee',
+        name: 'Applicant',
       },
       {
-        type_name: 'Student',
+        name: 'Student',
       },
       {
-        type_name: 'Parent',
+        name: 'Parent',
       },
       {
-        type_name: 'Teacher',
+        name: 'Teacher',
       },
       {
-        type_name: 'Other',
+        name: 'Other',
+      },
+    ]);
+    await queryInterface.bulkInsert('bot_settings', [
+      {
+        name: 'AboutNULP',
+        value: 'Кафедра інформаційних систем та мереж — це навчально-науковий підрозділ Інституту комп’ютерних наук та інформаційних технологій Львівської політехніки. Утворена 1 червня 1995 року наказом ректора «Львівської політехніки» після прийняття відповідної ухвали Вченою радою Університету. Колектив кафедри ІСМ на момент утворення складався з п\'яти викладачів, одного інженерно-технічного працівника, трьох співробітників НДЛ та групи молодих аспірантів, котрі виокремилися зі складу кафедри АСУ та були об’єднані спільною науковою проблематикою з інформаційного моделювання, систем баз даних і знань',
+      },
+      {
+        name: 'AboutISM',
+        value: `Національний університет "Львівська політехніка" — найстаріший вищий технічний навчальний заклад України та Східної Європи, заснований 1816 року як Цісарсько-королівська реальна школа. Університет складається з 16 інститутів, 114 кафедр, відокремлених навчальних закладів, громадських організацій та загальних підрозділів.
+
+Адреса: м.Львів 79013, вул. С. Бандери 12
+E-mail: coffice@lp.edu.ua
+Номер телефону: +38 032 258-21-11`,
+      },
+      {
+        name: 'HowToUseBot',
+        value: `Чат-бот надає основні довідкові дані про кафедру "Інформаційних систем та мереж" Національного університету "Львівська політехніка". 
+
+Після простої реєстрації ви можете поставити йому власне питання або ж переглянути пункти "Головного меню".  На прохання уточнення можна відповісти як натисканням кнопки з варіантом, так і за допомогою введення тексту. Пошук  інформації оптимізований відповідно до ваших потреб. Також доступна розсилка найважливіших новин кафедри та розкладу занять.`,
       },
     ]);
   },
 
   down: async (queryInterface) => {
     await queryInterface
+      .bulkDelete('users', null, {});
+    await queryInterface
       .bulkDelete('user_roles', null, {});
     await queryInterface
       .bulkDelete('user_types', null, {});
+    await queryInterface
+      .bulkDelete('unanswered_questions', null, {});
+    await queryInterface
+      .bulkDelete('faqs', null, {});
+    await queryInterface
+      .bulkDelete('bot_settings', null, {});
   },
 };
