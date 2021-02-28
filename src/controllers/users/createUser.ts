@@ -3,12 +3,12 @@ import { Request, Response } from 'express';
 import { User } from '../../models';
 import { saveUserToCache } from '../../utils';
 
-export default async (req: Request, res: Response): Promise<Response> => {
+export default async (req: Request, res: Response): Promise<void> => {
   try {
     const user = await User.create(req.body);
     saveUserToCache(user);
 
-    return res.status(200).json({
+    res.status(200).json({
       status: 'success',
       user,
     });
@@ -18,7 +18,7 @@ export default async (req: Request, res: Response): Promise<Response> => {
         type === 'unique violation'
       )) ? 409 : 500;
 
-    return res.status(statusCode).json({
+    res.status(statusCode).json({
       message: error.message,
       error,
     });
