@@ -20,7 +20,7 @@ export default async (req: Request, res: Response): Promise<void> => {
     } else {
       res.status(200).json({
         status: 'success',
-        settings: settingsValue[0],
+        settings: 'test',
       });
     }
   } catch (error) {
