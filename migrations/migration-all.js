@@ -1,16 +1,12 @@
-module.exports = {
-  up: async (queryInterface, Sequelize) => queryInterface.sequelize.transaction((t) => queryInterface.addColumn(
-    'users',
-    'email',
-    {
-      type: Sequelize.STRING,
-    },
-    {
-      transaction: t,
-    },
-  )),
+'use strict';
 
-  down: async (queryInterface, Sequelize) => queryInterface.sequelize.transaction((t) => queryInterface.removeColumn('users', 'email', {
-    transaction: t,
-  })),
+module.exports = {
+  up: (queryInterface, Sequelize) =>
+    queryInterface.addColumn('users', 'image_url', {
+      type: Sequelize.STRING,
+    }),
+
+  down: (queryInterface, Sequelize) =>
+    queryInterface.removeColumn('users', 'image_url')
+
 };
